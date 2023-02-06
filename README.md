@@ -9,6 +9,7 @@ This repository contains Monk.io template to deploy Drupal system either locally
     - [Load Template](#load-template)
     - [Verify if it's loaded correctly](#verify-if-its-loaded-correctly)
     - [Deploy Drupal](#deploy-drupal)
+    - [Notice](#notice)
   - [Variables](#variables)
   - [Stop, remove and clean up workloads and templates](#stop-remove-and-clean-up-workloads-and-templates)
 
@@ -93,6 +94,10 @@ $ monk run drupal/stack
         monk do        local/drupal/stack/action_name - Run defined action (if exists)
 💡 Check monk help for more!
 ```
+
+### Notice
+
+During Drupal installation you need to specify drupal database password, even though it is set in variables.
 
 ## Variables
 
