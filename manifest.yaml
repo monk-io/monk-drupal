@@ -1,0 +1,77 @@
+---
+namespace: drupal
+
+common:
+  metadata:
+    website: https://www.drupal.org/
+    name: Drupal
+    icon: https://www.drupal.org/files/cta/graphic/drupal_10_whitelogo_1.png
+    publisher: monk.io
+    description: Drupal is a free and open-source web content management system written in PHP and distributed under the GNU General Public License.
+    source: https://github.com/drupal
+    version: 1.0
+  variables:
+    db-name:
+      type: string
+      value: drupal
+    db-user:
+      type: string
+      value: drupal
+    db-pass:
+      type: string
+      value: drupal
+
+server:
+  defines: runnable
+  inherits: drupal/common
+  containers:
+    drupal:
+      image: drupal
+      image-tag: 10-apache-bullseye
+      ports:
+        - 80:80
+      bash: /usr/local/bin/entrypoint.sh
+  connections:
+    mariadb:
+      runnable: drupal/db
+      service: mariadb
+  files:
+    settings:
+      container: drupal
+      mode: 0666
+      path: /opt/drupal/web/sites/default/default.settings.php.monk
+      contents: <<< files/settings.php
+    entrypoint:
+      container: drupal
+      mode: 0755
+      path: /usr/local/bin/entrypoint.sh
+      contents: <<< files/entrypoint.sh
+  variables:
+    db-host:
+      type: string
+      value: <- connection-hostname("mariadb")
+
+db:
+  defines: runnable
+  containers:
+    mariadb:
+      image: mariadb
+      image-tag: '10.5'
+      paths:
+        - <- `${monk-volume-path}/drupal/mysql:/var/lib/mysql`
+      environment:
+        - <- `MARIADB_DATABASE=${db-name}`
+        - <- `MARIADB_USER=${db-user}`
+        - <- `MARIADB_PASSWORD=${db-pass}`
+        - MARIADB_RANDOM_ROOT_PASSWORD=yes
+  services:
+    mariadb:
+      container: mariadb
+      port: 3306
+      protocol: tcp
+
+stack:
+  defines: process-group
+  runnable-list:
+    - drupal/db
+    - drupal/server
