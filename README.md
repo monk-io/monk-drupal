@@ -4,7 +4,7 @@ This repository contains Monk.io template to deploy Drupal system either locally
 
 - [Drupal meets Monk](#drupal-meets-monk)
   - [Prerequisites](#prerequisites)
-    - [Make sure monkd is running.](#make-sure-monkd-is-running)
+    - [Make sure monkd is running](#make-sure-monkd-is-running)
     - [Clone Repository](#clone-repository)
     - [Load Template](#load-template)
     - [Verify if it's loaded correctly](#verify-if-its-loaded-correctly)
@@ -20,7 +20,7 @@ This repository contains Monk.io template to deploy Drupal system either locally
 - [Add Cloud Provider](https://docs.monk.io/docs/cloud-provider)
 - [Add Instance](https://docs.monk.io/docs/multi-cloud)
 
-### Make sure monkd is running.
+### Make sure monkd is running
 
 ```bash
 foo@bar:~$ monk status

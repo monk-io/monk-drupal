@@ -7,19 +7,21 @@ common:
     name: Drupal
     icon: https://www.drupal.org/files/cta/graphic/drupal_10_whitelogo_1.png
     publisher: monk.io
-    description: Drupal is a free and open-source web content management system written in PHP and distributed under the GNU General Public License.
+    description: |
+      Drupal is a free and open-source content management system (CMS) that powers millions of websites and applications.
+
+      Built in PHP, Drupal is highly flexible and customizable, allowing developers to create unique websites and web applications that meet their specific needs.
+
+      It is a community-driven project, with thousands of developers contributing to the codebase and providing support and documentation for users.
+
+      Drupal offers a wide range of features and functionalities, including powerful content management tools, responsive and mobile-friendly design, multilingual support, e-commerce capabilities, and robust security features.
+
+      Its modular architecture allows developers to add new features and functionalities through third-party modules and themes, making it highly scalable and adaptable.
+
+      Overall, Drupal is a versatile and reliable platform for building dynamic and engaging digital experiences.
     source: https://github.com/drupal
+    tags: Content management system (CMS), Open source, PHP, Website development, Community-driven, Customizable, Themes, Modules, Scalable, Flexible, Multilingual, Responsive design, SEO-friendly, Mobile-friendly, E-commerce
     version: 1.0
-  variables:
-    db-name:
-      type: string
-      value: drupal
-    db-user:
-      type: string
-      value: drupal
-    db-pass:
-      type: string
-      value: drupal
 
 server:
   defines: runnable
@@ -28,13 +30,17 @@ server:
     drupal:
       image: drupal
       image-tag: 10-apache-bullseye
-      ports:
-        - 80:80
       bash: /usr/local/bin/entrypoint.sh
   connections:
     mariadb:
       runnable: drupal/db
       service: mariadb
+  services:
+    server:
+      container: drupal
+      port: 80
+      protocol: tcp
+      host-port: 80
   files:
     settings:
       container: drupal
@@ -53,6 +59,8 @@ server:
 
 db:
   defines: runnable
+  metadata:
+    private: true
   containers:
     mariadb:
       image: mariadb
@@ -60,18 +68,48 @@ db:
       paths:
         - <- `${monk-volume-path}/drupal/mysql:/var/lib/mysql`
       environment:
-        - <- `MARIADB_DATABASE=${db-name}`
-        - <- `MARIADB_USER=${db-user}`
-        - <- `MARIADB_PASSWORD=${db-pass}`
         - MARIADB_RANDOM_ROOT_PASSWORD=yes
   services:
     mariadb:
       container: mariadb
       port: 3306
       protocol: tcp
+  variables:
+    db-name:
+      env: MARIADB_DATABASE
+      type: string
+      value: drupal
+    db-user:
+      env: MARIADB_USER
+      type: string
+      value: drupal
+    db-pass:
+      env: MARIADB_PASSWORD
+      type: string
+      value: drupal
 
 stack:
   defines: process-group
+  metadata:
+    website: https://www.drupal.org/
+    name: Drupal
+    icon: https://www.drupal.org/files/cta/graphic/drupal_10_whitelogo_1.png
+    publisher: monk.io
+    description: |
+      Drupal is a free and open-source content management system (CMS) that powers millions of websites and applications.
+
+      Built in PHP, Drupal is highly flexible and customizable, allowing developers to create unique websites and web applications that meet their specific needs.
+
+      It is a community-driven project, with thousands of developers contributing to the codebase and providing support and documentation for users.
+
+      Drupal offers a wide range of features and functionalities, including powerful content management tools, responsive and mobile-friendly design, multilingual support, e-commerce capabilities, and robust security features.
+
+      Its modular architecture allows developers to add new features and functionalities through third-party modules and themes, making it highly scalable and adaptable.
+
+      Overall, Drupal is a versatile and reliable platform for building dynamic and engaging digital experiences.
+    source: https://github.com/drupal
+    tags: Content management system (CMS), Open source, PHP, Website development, Community-driven, Customizable, Themes, Modules, Scalable, Flexible, Multilingual, Responsive design, SEO-friendly, Mobile-friendly, E-commerce
+    version: 1.0
   runnable-list:
     - drupal/db
     - drupal/server
