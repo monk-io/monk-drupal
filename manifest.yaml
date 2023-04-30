@@ -22,7 +22,7 @@ common:
     source: https://github.com/drupal
     tags: Content management system (CMS), Open source, PHP, Website development, Community-driven, Customizable, Themes, Modules, Scalable, Flexible, Multilingual, Responsive design, SEO-friendly, Mobile-friendly, E-commerce
     version: 1.0
-
+    private: true
 server:
   defines: runnable
   inherits: drupal/common
