@@ -23,6 +23,7 @@ common:
     tags: Content management system (CMS), Open source, PHP, Website development, Community-driven, Customizable, Themes, Modules, Scalable, Flexible, Multilingual, Responsive design, SEO-friendly, Mobile-friendly, E-commerce
     version: 1.0
     private: true
+
 server:
   defines: runnable
   inherits: drupal/common
@@ -56,6 +57,18 @@ server:
     db-host:
       type: string
       value: <- connection-hostname("mariadb")
+    db-name:
+      env: MARIADB_DATABASE
+      type: string
+      value: <- $db-name default("drupal")
+    db-user:
+      env: MARIADB_USER
+      type: string
+      value: <- $db-user default("drupal")
+    db-pass:
+      env: MARIADB_PASSWORD
+      type: string
+      value: <- $db-pass default("drupal")
 
 db:
   defines: runnable
@@ -78,15 +91,15 @@ db:
     db-name:
       env: MARIADB_DATABASE
       type: string
-      value: drupal
+      value: <- $db-name default("drupal")
     db-user:
       env: MARIADB_USER
       type: string
-      value: drupal
+      value: <- $db-user default("drupal")
     db-pass:
       env: MARIADB_PASSWORD
       type: string
-      value: drupal
+      value: <- $db-pass default("drupal")
 
 stack:
   defines: process-group
@@ -107,6 +120,16 @@ stack:
       Its modular architecture allows developers to add new features and functionalities through third-party modules and themes, making it highly scalable and adaptable.
 
       Overall, Drupal is a versatile and reliable platform for building dynamic and engaging digital experiences.
+
+      ---
+
+      Notes:
+
+      During drupal installation default mariadb password is: drupal.
+      If you need to override, please use predefined variables:
+      db-name
+      db-user
+      db-pass
     source: https://github.com/drupal
     tags: Content management system (CMS), Open source, PHP, Website development, Community-driven, Customizable, Themes, Modules, Scalable, Flexible, Multilingual, Responsive design, SEO-friendly, Mobile-friendly, E-commerce
     version: 1.0
