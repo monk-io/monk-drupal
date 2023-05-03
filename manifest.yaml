@@ -73,6 +73,20 @@ server:
 db:
   defines: runnable
   metadata:
+    name: mariadb
+    description: |
+      MariaDB is a popular open-source relational database management system (RDBMS) that is compatible with MySQL.
+
+      It was initially created as a fork of MySQL in 2009 by the original developers of }/mariadb-conf:/etc/mysql/conf.d
+
+      MariaDB offers many additional features and enhancements over MySQL, including improved performance, scalability, and security.
+
+      It also includes several advanced features such as support for dynamic columns, parallel replication, and built-in support for geographic information system (GIS) data.
+    tags: self hosted, database, SQL, Replication and clustering, Query optimization, MySQL alternative, Stored procedures and triggers
+    website: https://mariadb.org/
+    source: https://github.com/MariaDB/
+    publisher: monk.io
+    icon: https://mariadb.com/wp-content/uploads/2019/11/mariadb-logo_blue-transparent-300x75.png
     private: true
   containers:
     mariadb:
@@ -136,3 +150,13 @@ stack:
   runnable-list:
     - drupal/db
     - drupal/server
+  variables:
+    db-name:
+      type: string
+      value: drupal
+    db-user:
+      type: string
+      value: drupal
+    db-pass:
+      type: string
+      value: drupal
