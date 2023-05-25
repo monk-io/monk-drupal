@@ -145,7 +145,7 @@ stack:
       db-user
       db-pass
     source: https://github.com/drupal
-    tags: customizable, modules, seo-friendly, e-commerce, php, scalable, multilingual, community-driven, flexible, mobile-friendly, open source
+    tags: cms, modules, seo, e-commerce, php, scalable, multilingual, website-builder
     version: 1.0
   runnable-list:
     - drupal/db
